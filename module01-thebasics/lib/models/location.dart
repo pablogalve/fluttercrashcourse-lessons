@@ -11,17 +11,23 @@ class Location {
   final int id;
   final String name;
   final String url;
+  final String user_itinerary_summary;
+  final String tour_package_name;
   final List<LocationFact>? facts;
   Location(
       {required this.id,
       required this.name,
       required this.url,
+      required this.user_itinerary_summary,
+      required this.tour_package_name,
       required this.facts});
 
   Location.blank()
       : id = 0,
-        name = '',
-        url = '',
+        name = ' ',
+        url = ' ',
+        user_itinerary_summary = ' ',
+        tour_package_name = ' ',
         facts = [];
 
   factory Location.fromJson(Map<String, dynamic> json) =>

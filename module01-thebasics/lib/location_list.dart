@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'components/banner_image.dart';
+import 'components/default_app_bar.dart';
 import 'components/location_tile.dart';
 import 'location_detail.dart';
 import 'styles.dart';
@@ -25,12 +27,7 @@ class _LocationListState extends State<LocationList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Locations',
-          style: Styles.navBarTitle,
-        ),
-      ),
+      appBar: DefaultAppBar(),
       body: RefreshIndicator(
         onRefresh: loadData,
         child: Column(
@@ -76,8 +73,7 @@ class _LocationListState extends State<LocationList> {
         height: ListItemHeight,
         child: Stack(
           children: [
-            _tileImage(location.url, MediaQuery.of(context).size.width,
-                ListItemHeight),
+            BannerImage(url: location.url, height: 300.0),
             _tileFooter(location),
           ],
         ),
@@ -88,21 +84,6 @@ class _LocationListState extends State<LocationList> {
   void _navigationToLocationDetail(BuildContext context, int locationID) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => LocationDetail(locationID)));
-  }
-
-  Widget _tileImage(String url, double width, double height) {
-    if (url.isEmpty) return Container();
-    Image image;
-    try {
-      image = Image.network(url, fit: BoxFit.cover);
-      return Container(
-        constraints: BoxConstraints.expand(),
-        child: image,
-      );
-    } catch (e) {
-      print('could not load image $url');
-      return Container();
-    }
   }
 
   Widget _tileFooter(Location location) {
